@@ -124,7 +124,6 @@ function show10() {
 function showHLs() {
     hideAll();
     let elements = document.querySelectorAll('[data-word].highlight');
-    console.log(elements.length);
     for (let i=0;  i<elements.length; i++)
         elements[i].style.display = 'block';
 }

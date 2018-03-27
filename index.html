@@ -23,18 +23,24 @@
 
     <div id="menubox" class="menubox" style="display: none">
         <p></p>
-        <table><tr>
-            <td onclick="onToggleHighlight()">Highlight</td>
-        </tr></table>
-        <table><tr>
-            <td onclick='onOpenTab("cambridge")'>Cambridge</td>
-            <td onclick='onOpenTab("webster")'>Webster</td>
-        </tr></table>
-        <table><tr>
-            <td onclick='show10()'>show 10</td>
-            <td onclick='showAll()'>show All</td>
-            <td onclick='showHLs()'>show HLs</td>
-        </tr></table>
+        <table>
+            <tr>
+                <td colspan="3" onclick="onToggleHighlight()">Highlight</td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td onclick='onOpenTab("cambridge")'>Cambridge</td>
+                <td onclick='onOpenTab("webster")'>Webster</td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td onclick='show10()'>show 10</td>
+                <td onclick='showAll()'>show All</td>
+                <td onclick='showHLs()'>show HLs</td>
+            </tr>
+        </table>
     </div>
 
     <div id="result" class="result">
