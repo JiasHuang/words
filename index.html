@@ -5,7 +5,7 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
-<title>WORDS</title>
+<title>words</title>
 
 <link rel="stylesheet" href="style.css?v=25c580c16728f3acbc6fbbca03b2ba38">
 
@@ -21,7 +21,21 @@
 
     <p>NOTE. VOA special english 1500 words</p>
 
-    <div id="menubox" class="menubox"></div>
+    <div id="menubox" class="menubox" style="display: none">
+        <p></p>
+        <table><tr>
+            <td onclick="onToggleHighlight()">Highlight</td>
+        </tr></table>
+        <table><tr>
+            <td onclick='onOpenTab("cambridge")'>Cambridge</td>
+            <td onclick='onOpenTab("webster")'>Webster</td>
+        </tr></table>
+        <table><tr>
+            <td onclick='show10()'>show 10</td>
+            <td onclick='showAll()'>show All</td>
+            <td onclick='showHLs()'>show HLs</td>
+        </tr></table>
+    </div>
 
     <div id="result" class="result">
 
@@ -1541,4 +1555,3 @@
 </body>
 
 </html>
-

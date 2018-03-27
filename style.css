@@ -30,9 +30,9 @@ p {
 
 .menubox td {
     text-align: center;
-    font-size: 40px;
+    font-size: 32px;
     padding: 16px;
-    line-height: 40px;
+    line-height: 32px;
     background-color: #4682B4;
     color: white;
 }
