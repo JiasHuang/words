@@ -13,10 +13,6 @@ p {
     color: blue;
 }
 
-.ignore {
-    color: gray;
-}
-
 .menubox {
     position: fixed;
     background: white;

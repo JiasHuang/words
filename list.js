@@ -8,8 +8,14 @@ function saveLocalStorage() {
 
 function toggleMenubox(word) {
     let element = document.getElementById('menubox');
-    if (!bMenubox && word) {
-        element.getElementsByTagName('p')[0].innerHTML = word;
+    if (!bMenubox) {
+        if (word) {
+            element.getElementsByTagName('p')[0].innerHTML = word;
+            element.getElementsByTagName('p')[0].style.display = 'block';
+        } else {
+            element.getElementsByTagName('p')[0].innerHTML = '';
+            element.getElementsByTagName('p')[0].style.display = 'none';
+        }
         element.style.display = 'block';
         bMenubox = true;
     } else {
@@ -31,6 +37,15 @@ function toggleHighlight(word) {
     }
 }
 
+function onToggleHighlight() {
+    let element = document.getElementById('menubox');
+    let word = element.getElementsByTagName('p')[0].innerHTML;
+    if (word && word.length > 0) {
+        toggleHighlight(word);
+        saveLocalStorage();
+    }
+}
+
 function onOpenTab(site) {
     let element = document.getElementById('menubox');
     let word = element.getElementsByTagName('p')[0].innerHTML;
@@ -41,19 +56,15 @@ function onOpenTab(site) {
     }
 }
 
-function onToggleHighlight() {
-    let element = document.getElementById('menubox');
-    let word = element.getElementsByTagName('p')[0].innerHTML;
-    toggleHighlight(word);
-    saveLocalStorage();
-}
-
 function onClick(event) {
     let element = event.target.closest('div');
     if (element && element.hasAttribute('data-word')) {
         let word = element.dataset.word;
         event.preventDefault();
         toggleMenubox(word);
+    } else {
+        event.preventDefault();
+        toggleMenubox(null);
     }
 }
 
