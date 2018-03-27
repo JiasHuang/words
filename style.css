@@ -1,12 +1,12 @@
 
 div {
     border: 2px solid white;
-    font-size: 24px;
+    margin: 0px;
 }
 
-.float_right {
-    float:right;
-    margin-left: 40px;
+p {
+    margin: 10px;
+    font-size: 24px;
 }
 
 .highlight {
@@ -15,4 +15,24 @@ div {
 
 .ignore {
     color: gray;
+}
+
+.menubox {
+    position: fixed;
+    background: white;
+    bottom: 100px;
+    right: 100px;
+}
+
+.menubox table {
+    width: calc(100vw - 200px);
+}
+
+.menubox td {
+    text-align: center;
+    font-size: 40px;
+    padding: 16px;
+    line-height: 40px;
+    background-color: #4682B4;
+    color: white;
 }
