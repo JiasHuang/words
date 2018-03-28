@@ -6,17 +6,15 @@ function saveLocalStorage() {
     localStorage.setItem('highlights', highlights.join('_'));
 }
 
-function toggleMenubox(word) {
+function toggleMenubox(word, posX, posY) {
     let element = document.getElementById('menubox');
-    if (!bMenubox) {
-        if (word) {
-            element.getElementsByTagName('p')[0].innerHTML = word;
-            element.getElementsByTagName('p')[0].style.display = 'block';
-        } else {
-            element.getElementsByTagName('p')[0].innerHTML = '';
-            element.getElementsByTagName('p')[0].style.display = 'none';
-        }
+    if (!bMenubox && word) {
+        element.dataset.selected = word;
+        element.style.left = posX + 'px';
+        element.style.top = posY + 'px';
         element.style.display = 'block';
+        if (posY + element.clientHeight > window.innerHeight)
+            element.style.top = (posY - element.clientHeight) + 'px';
         bMenubox = true;
     } else {
         element.style.display = 'none';
@@ -28,18 +26,18 @@ function toggleHighlight(word) {
     let element = document.querySelector('div[data-word='+word+']');
     let index = highlights.indexOf(word);
     if (index >= 0) {
-        element.classList.remove('highlight');
+        element.getElementsByTagName('p')[0].classList.remove('highlight');
         highlights.splice(index, 1);
     }
     else {
         highlights.push(word);
-        element.classList.add('highlight');
+        element.getElementsByTagName('p')[0].classList.add('highlight');
     }
 }
 
 function onToggleHighlight() {
     let element = document.getElementById('menubox');
-    let word = element.getElementsByTagName('p')[0].innerHTML;
+    let word = element.dataset.selected;
     if (word && word.length > 0) {
         toggleHighlight(word);
         saveLocalStorage();
@@ -48,23 +46,24 @@ function onToggleHighlight() {
 
 function onOpenTab(site) {
     let element = document.getElementById('menubox');
-    let word = element.getElementsByTagName('p')[0].innerHTML;
+    let word = element.dataset.selected;
     if (site == 'webster') {
         window.open('https://www.merriam-webster.com/dictionary/'+word, 'webster');
     } else if (site == 'cambridge') {
         window.open('https://dictionary.cambridge.org/zht/%E8%A9%9E%E5%85%B8/%E8%8B%B1%E8%AA%9E-%E6%BC%A2%E8%AA%9E-%E7%B9%81%E9%AB%94/'+word, 'cambridge');
+    } else if (site == 'dreye') {
+        window.open('https://tw.dictionary.yahoo.com/dictionary?p='+word, 'dreye');
     }
 }
 
 function onClick(event) {
-    let element = event.target.closest('div');
-    if (element && element.hasAttribute('data-word')) {
+    if (event.target.matches('div[data-word] p')) {
+        let element = event.target.parentElement;
         let word = element.dataset.word;
         event.preventDefault();
-        toggleMenubox(word);
+        toggleMenubox(word, event.clientX, event.clientY);
     } else {
-        event.preventDefault();
-        toggleMenubox(null);
+        toggleMenubox(null, 0, 0);
     }
 }
 
@@ -95,7 +94,7 @@ function onDocumentReady() {
     }
 
     document.addEventListener('click', onClick);
-    show10();
+    showRandom();
 }
 
 function getRndInteger(min, max) {
@@ -114,7 +113,7 @@ function showAll() {
         elements[i].style.display = 'block';
 }
 
-function show10() {
+function showRandom() {
     hideAll();
     let elements = document.querySelectorAll('[data-word]');
     for (let i=0;  i<10; i++)
@@ -123,7 +122,8 @@ function show10() {
 
 function showHLs() {
     hideAll();
-    let elements = document.querySelectorAll('[data-word].highlight');
-    for (let i=0;  i<elements.length; i++)
-        elements[i].style.display = 'block';
+    let elements = document.querySelectorAll('p.highlight');
+    for (let i=0;  i<elements.length; i++) {
+        elements[i].parentElement.style.display = 'block';
+    }
 }

@@ -9,26 +9,29 @@ p {
     font-size: 24px;
 }
 
-.highlight {
-    color: blue;
+.menubar {
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    background-color: white;
+    font-size: 32px;
+}
+
+.menubar span {
+    margin-left: 16px;
+    padding-right: 16px;
 }
 
 .menubox {
     position: fixed;
     background: white;
-    bottom: 100px;
-    right: 100px;
 }
 
-.menubox table {
-    width: calc(100vw - 200px);
-}
-
-.menubox td {
-    text-align: center;
+.menubox p {
     font-size: 32px;
-    padding: 16px;
-    line-height: 32px;
-    background-color: #4682B4;
-    color: white;
+    line-height: 40px;
+}
+
+.highlight {
+    color: blue;
 }

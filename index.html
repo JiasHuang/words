@@ -19,28 +19,18 @@
 
 <body bgcolor=silver>
 
-    <p>NOTE. VOA special english 1500 words</p>
+    <p>VOA special english 1500 words</p>
+    <div class="menubar">
+        <span onclick='showRandom()'>Random</span>
+        <span onclick='showAll()'>All</span>
+        <span onclick='showHLs()'>HLs</span>
+    </div>
 
-    <div id="menubox" class="menubox" style="display: none">
-        <p></p>
-        <table>
-            <tr>
-                <td colspan="3" onclick="onToggleHighlight()">Highlight</td>
-            </tr>
-        </table>
-        <table>
-            <tr>
-                <td onclick='onOpenTab("cambridge")'>Cambridge</td>
-                <td onclick='onOpenTab("webster")'>Webster</td>
-            </tr>
-        </table>
-        <table>
-            <tr>
-                <td onclick='show10()'>show 10</td>
-                <td onclick='showAll()'>show All</td>
-                <td onclick='showHLs()'>show HLs</td>
-            </tr>
-        </table>
+    <div id="menubox" class="menubox" style="display: none" data-selected="">
+        <p onclick="onToggleHighlight()">Highlight</p>
+        <p onclick='onOpenTab("cambridge")'>Cambridge</p>
+        <p onclick='onOpenTab("webster")'>Webster</p>
+        <p onclick='onOpenTab("dreye")'>Dr.eye</p>
     </div>
 
     <div id="result" class="result">
