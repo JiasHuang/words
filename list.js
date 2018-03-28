@@ -2,6 +2,7 @@
 var highlights = [];
 var bMenubox = false;
 var xDonw = null;
+var yDonw = null;
 
 function saveLocalStorage() {
     localStorage.setItem('highlights', highlights.join('_'));
@@ -82,20 +83,20 @@ function onClick(event) {
 
 function handleTouchStart(event) {
     xDown = event.touches[0].clientX;
+    yDown = event.touches[0].clientY;
 }
 
 function handleTouchMove(event) {
-    if (event.target.matches('div[data-word] p')) {
-        event.preventDefault();
-        if ( !xDown)
-            return;
+    if (event.target.matches('div[data-word] p') && xDown && yDown) {
         let word = event.target.parentElement.dataset.word;
         let xUp = event.touches[0].clientX;
+        let yUp = event.touches[0].clientY;
         let xDiff = xDown - xUp;
-        console.log(xDiff);
-        if (Math.abs(xDiff) > 10)
+        let yDiff = yDown - yUp;
+        if (Math.abs(xDiff) > 10 && Math.abs(yDiff) < 10)
             toggleHighlight(word);
         xDown = null;
+        yDown = null;
     }
 }
 
