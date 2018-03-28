@@ -85,13 +85,14 @@ function handleTouchStart(event) {
 }
 
 function handleTouchMove(event) {
-    if (event.target.matches('div[data-word]')) {
-        evt.preventDefault();
+    if (event.target.matches('div[data-word] p')) {
+        event.preventDefault();
         if ( !xDown)
             return;
-        let word = event.target.dataset.word;
+        let word = event.target.parentElement.dataset.word;
         let xUp = event.touches[0].clientX;
         let xDiff = xDown - xUp;
+        console.log(xDiff);
         if (Math.abs(xDiff) > 10)
             toggleHighlight(word);
         xDown = null;

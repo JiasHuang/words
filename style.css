@@ -14,13 +14,12 @@ p {
     top: 0px;
     right: 0px;
     background-color: white;
-    font-size: 32px;
 }
 
 .menubar span {
-    margin-left: 32px;
-    padding-right: 32px;
-    font-size: 24px;
+    margin-right: 32px;
+    font-size: 32px;
+    color: blue;
 }
 
 .menubox {
@@ -31,6 +30,7 @@ p {
 .menubox p {
     font-size: 32px;
     line-height: 64px;
+    color: blue;
 }
 
 .highlight {
