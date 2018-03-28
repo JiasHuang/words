@@ -1,9 +1,20 @@
 
 var highlights = [];
 var bMenubox = false;
+var xDonw = null;
 
 function saveLocalStorage() {
     localStorage.setItem('highlights', highlights.join('_'));
+}
+
+function finalize(element) {
+    let word = element.dataset.word;
+    let type = element.dataset.type;
+    let desc = element.innerHTML;
+    let text = '';
+    text += '<p>' + word + ' [' + type + ']</p>\n';
+    text += '<p>' + desc + '</p>\n';
+    element.innerHTML = text;
 }
 
 function toggleMenubox(word, posX, posY) {
@@ -13,6 +24,8 @@ function toggleMenubox(word, posX, posY) {
         element.style.left = posX + 'px';
         element.style.top = posY + 'px';
         element.style.display = 'block';
+        if (posX + element.clientWidth > window.innerWidth)
+            element.style.left = (posX - element.clientWidth) + 'px';
         if (posY + element.clientHeight > window.innerHeight)
             element.style.top = (posY - element.clientHeight) + 'px';
         bMenubox = true;
@@ -67,14 +80,22 @@ function onClick(event) {
     }
 }
 
-function finalize(element) {
-    let word = element.dataset.word;
-    let type = element.dataset.type;
-    let desc = element.innerHTML;
-    let text = '';
-    text += '<p>' + word + ' [' + type + ']</p>\n';
-    text += '<p>' + desc + '</p>\n';
-    element.innerHTML = text;
+function handleTouchStart(event) {
+    xDown = event.touches[0].clientX;
+}
+
+function handleTouchMove(event) {
+    if (event.target.matches('div[data-word]')) {
+        evt.preventDefault();
+        if ( !xDown)
+            return;
+        let word = event.target.dataset.word;
+        let xUp = event.touches[0].clientX;
+        let xDiff = xDown - xUp;
+        if (Math.abs(xDiff) > 10)
+            toggleHighlight(word);
+        xDown = null;
+    }
 }
 
 function onDocumentReady() {
@@ -94,6 +115,9 @@ function onDocumentReady() {
     }
 
     document.addEventListener('click', onClick);
+    document.addEventListener('touchstart', handleTouchStart, false);
+    document.addEventListener('touchmove', handleTouchMove, false);
+
     showRandom();
 }
 
