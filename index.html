@@ -7,9 +7,9 @@
 
 <title>words</title>
 
-<link rel="stylesheet" href="style.css?v=25c580c16728f3acbc6fbbca03b2ba38">
+<link rel="stylesheet" href="style.css?v=2e95f9f681e631f74f4f04d82f1fee4e">
 
-<script type="text/javascript" src="list.js?v=2bf0d19bf6724e5c0f5df5b425f1279c"></script>
+<script type="text/javascript" src="list.js?v=c596a7d1715a2d79ea17652f7188f601"></script>
 
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", onDocumentReady);
@@ -20,16 +20,11 @@
 <body bgcolor=silver>
 
     <p class="caption">VOA special english 1500 words</p>
-    <div class="menubar">
-        <span onclick='showRandom()'>Random</span>
-        <span onclick='showAll()'>All</span>
-        <span onclick='showHLs()'>HLs</span>
-    </div>
 
     <div id="menubox" class="menubox" style="display: none" data-selected="">
+        <p onclick='onToggleHighlight()'>Highlight</p>
         <p onclick='onOpenTab("cambridge")'>Cambridge</p>
-        <p onclick='onOpenTab("webster")'>Webster</p>
-        <p onclick='onOpenTab("dreye")'>Dr.eye</p>
+        <p onclick='onOpenTab("database")'>Database</p>
     </div>
 
     <div id="result" class="result">

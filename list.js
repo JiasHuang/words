@@ -67,6 +67,8 @@ function onOpenTab(site) {
         window.open('https://dictionary.cambridge.org/zht/%E8%A9%9E%E5%85%B8/%E8%8B%B1%E8%AA%9E-%E6%BC%A2%E8%AA%9E-%E7%B9%81%E9%AB%94/'+word, 'cambridge');
     } else if (site == 'dreye') {
         window.open('https://tw.dictionary.yahoo.com/dictionary?p='+word, 'dreye');
+    } else if (site == 'database') {
+        window.open('db/'+word+'.html', 'database');
     }
 }
 
@@ -87,14 +89,18 @@ function handleTouchStart(event) {
 }
 
 function handleTouchMove(event) {
-    if (event.target.matches('div[data-word] p') && xDown && yDown) {
-        let word = event.target.parentElement.dataset.word;
+    if (xDown && yDown) {
         let xUp = event.touches[0].clientX;
         let yUp = event.touches[0].clientY;
         let xDiff = xDown - xUp;
         let yDiff = yDown - yUp;
-        if (Math.abs(xDiff) > 10 && Math.abs(yDiff) < 10)
-            toggleHighlight(word);
+        if (Math.abs(xDiff) > 10 && Math.abs(yDiff) < 10) {
+            if (xDiff > 0) {
+                showRandom();
+            } else {
+                showHLs();
+            }
+        }
         xDown = null;
         yDown = null;
     }
@@ -142,7 +148,7 @@ function showAll() {
 function showRandom() {
     hideAll();
     let elements = document.querySelectorAll('[data-word]');
-    for (let i=0;  i<10; i++)
+    for (let i=0;  i<8; i++)
         elements[getRndInteger(0, elements.length)].style.display = 'block';
 }
 
