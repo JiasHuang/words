@@ -120,6 +120,8 @@ function handleTouchMove(event) {
 
 function onDocumentReady() {
 
+    document.getElementById('result').innerHTML = words;
+
     let elements = document.querySelectorAll('[data-word]');
     for (let i=0;  i<elements.length; i++) {
         finalize(elements[i]);
@@ -127,10 +129,10 @@ function onDocumentReady() {
 
     let s_highlights = localStorage.getItem('highlights');
     if (s_highlights !== null) {
-        let words = s_highlights.split('_');
-        for (let i=0; i<words.length; i++) {
-            if (words[i].length > 0)
-                toggleHighlight(words[i]);
+        let hls = s_highlights.split('_');
+        for (let i=0; i<hls.length; i++) {
+            if (hls[i].length > 0)
+                toggleHighlight(hls[i]);
         }
     }
 
