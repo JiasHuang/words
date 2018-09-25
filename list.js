@@ -1,8 +1,8 @@
 
 var highlights = [];
 var bMenubox = false;
-var xDonw = null;
-var yDonw = null;
+var xDown = null;
+var yDown = null;
 var bHLs = false;
 
 function saveLocalStorage() {
@@ -84,7 +84,7 @@ function onOpenTab(site) {
     } else if (site == 'dreye') {
         window.open('https://tw.dictionary.yahoo.com/dictionary?p='+word, 'dreye');
     } else if (site == 'database') {
-        window.open('db.html?q='+word, 'database');
+        window.open('db/'+word+'.html', 'database');
     }
 }
 

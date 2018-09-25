@@ -18,27 +18,13 @@ function handleTouchMove(event)
         let yDiff = yDown - yUp;
         if (Math.abs(xDiff) > 10 && Math.abs(yDiff) < 10) {
             if (xDiff > 0) {
-                window.location.href = 'db.html?q='+nextHL;
+                window.location.href = nextHL+'.html';
             } else {
-                window.location.href = 'db.html?q='+prevHL;
+                window.location.href = prevHL+'.html';
             }
         }
         xDown = null;
         yDown = null;
-    }
-}
-
-function GetURLParameter(sParam)
-{
-    var sPageURL = window.location.search.substring(1);
-    var sURLVariables = sPageURL.split('&');
-    for (var i = 0; i < sURLVariables.length; i++)
-    {
-        var sParameterName = sURLVariables[i].split('=');
-        if (sParameterName[0] == sParam)
-        {
-            return sParameterName[1];
-        }
     }
 }
 
@@ -59,22 +45,14 @@ function updateAudio(q)
 {
     var text = '';
     text += '<h1>'+q+'</h1>\n';
-    text += '<audio preload="auto" id="uk"><source src="db/'+q+'.uk.ogg" type="audio/ogg"></audio>\n';
-    text += '<audio preload="auto" id="us"><source src="db/'+q+'.us.ogg" type="audio/ogg"></audio>\n';
+    text += '<audio preload="auto" id="uk"><source src="'+q+'.uk.ogg" type="audio/ogg"></audio>\n';
+    text += '<audio preload="auto" id="us"><source src="'+q+'.us.ogg" type="audio/ogg"></audio>\n';
     document.getElementById("audio").innerHTML = text;
-}
-
-function updateResult(q)
-{
-    var text = '';
-    text += '<iframe id="iframe" src="db/'+q+'.html" />\n';
-    document.getElementById("result").innerHTML = text;
 }
 
 function loadHLs(q)
 {
     let s_highlights = localStorage.getItem('highlights');
-    console.log(s_highlights);
     if (s_highlights !== null) {
         let highlights = s_highlights.split('_');
         let index = highlights.indexOf(q);
@@ -87,9 +65,11 @@ function loadHLs(q)
 
 function onDocumentReady()
 {
-    var q = GetURLParameter('q');
+    var url = window.location.pathname;
+    var q = url.substring(url.lastIndexOf('/')+1);
+    if (q.lastIndexOf(".") != -1)
+        q = q.substring(0, q.lastIndexOf("."));
     updateAudio(q);
-    updateResult(q);
     document.addEventListener('click', playAudio);
 
     loadHLs(q);
