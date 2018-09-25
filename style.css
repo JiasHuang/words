@@ -37,3 +37,9 @@ p {
 .highlight {
     color: blue;
 }
+
+.btn {
+    margin: 48px;
+    color: blue;
+    text-align: center;
+}

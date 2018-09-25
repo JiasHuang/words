@@ -3,6 +3,7 @@ var highlights = [];
 var bMenubox = false;
 var xDonw = null;
 var yDonw = null;
+var bHLs = false;
 
 function saveLocalStorage() {
     localStorage.setItem('highlights', highlights.join('_'));
@@ -39,13 +40,26 @@ function toggleMenubox(word, posX, posY) {
 function toggleHighlight(word) {
     let element = document.querySelector('div[data-word='+word+']');
     let index = highlights.indexOf(word);
-    if (index >= 0) {
+    if (element === null) {
+        console.log('invalid element : (word = ' + word + ')');
+    }
+    else if (index >= 0) {
         element.getElementsByTagName('p')[0].classList.remove('highlight');
         highlights.splice(index, 1);
     }
     else {
         highlights.push(word);
         element.getElementsByTagName('p')[0].classList.add('highlight');
+    }
+}
+
+function toggleHLs() {
+    if (bHLs) {
+        bHLs = false;
+        showRandom();
+    } else {
+        bHLs = true;
+        showHLs();
     }
 }
 
@@ -65,10 +79,12 @@ function onOpenTab(site) {
         window.open('https://www.merriam-webster.com/dictionary/'+word, 'webster');
     } else if (site == 'cambridge') {
         window.open('https://dictionary.cambridge.org/zht/%E8%A9%9E%E5%85%B8/%E8%8B%B1%E8%AA%9E-%E6%BC%A2%E8%AA%9E-%E7%B9%81%E9%AB%94/'+word, 'cambridge');
+    } else if (site == 'longman') {
+        window.open('https://www.ldoceonline.com/dictionary/'+word, 'longman');
     } else if (site == 'dreye') {
         window.open('https://tw.dictionary.yahoo.com/dictionary?p='+word, 'dreye');
     } else if (site == 'database') {
-        window.open('db/'+word+'.html', 'database');
+        window.open('db.html?q='+word, 'database');
     }
 }
 
@@ -95,11 +111,7 @@ function handleTouchMove(event) {
         let xDiff = xDown - xUp;
         let yDiff = yDown - yUp;
         if (Math.abs(xDiff) > 10 && Math.abs(yDiff) < 10) {
-            if (xDiff > 0) {
-                showRandom();
-            } else {
-                showHLs();
-            }
+            toggleHLs();
         }
         xDown = null;
         yDown = null;
@@ -150,6 +162,10 @@ function showRandom() {
     let elements = document.querySelectorAll('[data-word]');
     for (let i=0;  i<8; i++)
         elements[getRndInteger(0, elements.length)].style.display = 'block';
+
+    window.scrollTo(0,0);
+    let resultEnd = document.getElementById('resultEnd');
+    resultEnd.innerHTML = '<p onclick="showRandom()" class="btn">NEXT</p>';
 }
 
 function showHLs() {
@@ -158,4 +174,8 @@ function showHLs() {
     for (let i=0;  i<elements.length; i++) {
         elements[i].parentElement.style.display = 'block';
     }
+
+    window.scrollTo(0,0);
+    let resultEnd = document.getElementById('resultEnd');
+    resultEnd.innerHTML = '';
 }
