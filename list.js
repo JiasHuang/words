@@ -4,6 +4,8 @@ var bMenubox = false;
 var xDown = null;
 var yDown = null;
 var bHLs = false;
+var bStopOnClick = false;
+var bShowRandom = false;
 
 function saveLocalStorage() {
     localStorage.setItem('highlights', highlights.join('_'));
@@ -14,6 +16,7 @@ function finalize(element) {
     let type = element.dataset.type;
     let desc = element.innerHTML;
     let text = '';
+    text += '<p class="btnR" onclick=onToggleHighlight.call(this)>[+]</p>\n';
     text += '<p>' + word + ' [' + type + ']</p>\n';
     text += '<p>' + desc + '</p>\n';
     element.innerHTML = text;
@@ -45,11 +48,13 @@ function toggleHighlight(word) {
     }
     else if (index >= 0) {
         element.getElementsByTagName('p')[0].classList.remove('highlight');
+        element.getElementsByTagName('p')[1].classList.remove('highlight');
         highlights.splice(index, 1);
     }
     else {
         highlights.push(word);
         element.getElementsByTagName('p')[0].classList.add('highlight');
+        element.getElementsByTagName('p')[1].classList.add('highlight');
     }
 }
 
@@ -64,12 +69,11 @@ function toggleHLs() {
 }
 
 function onToggleHighlight() {
-    let element = document.getElementById('menubox');
-    let word = element.dataset.selected;
-    if (word && word.length > 0) {
-        toggleHighlight(word);
-        saveLocalStorage();
-    }
+    let element = event.target.parentElement;
+    let word = element.dataset.word;
+    toggleHighlight(word);
+    saveLocalStorage();
+    bStopOnClick = true;
 }
 
 function onOpenTab(site) {
@@ -89,6 +93,12 @@ function onOpenTab(site) {
 }
 
 function onClick(event) {
+
+    if (bStopOnClick) {
+        bStopOnClick = false;
+        return;
+    }
+
     if (event.target.matches('div[data-word] p')) {
         let element = event.target.parentElement;
         let word = element.dataset.word;
@@ -111,7 +121,8 @@ function handleTouchMove(event) {
         let xDiff = xDown - xUp;
         let yDiff = yDown - yUp;
         if (Math.abs(xDiff) > 10 && Math.abs(yDiff) < 10) {
-            toggleHLs();
+            if (bShowRandom)
+                showRandom();
         }
         xDown = null;
         yDown = null;
@@ -157,6 +168,7 @@ function showAll() {
     let elements = document.querySelectorAll('[data-word]');
     for (let i=0;  i<elements.length; i++)
         elements[i].style.display = 'block';
+    bShowRandom = false;
 }
 
 function showRandom() {
@@ -167,7 +179,8 @@ function showRandom() {
 
     window.scrollTo(0,0);
     let resultEnd = document.getElementById('resultEnd');
-    resultEnd.innerHTML = '<p onclick="showRandom()" class="btn">NEXT</p>';
+    resultEnd.innerHTML = '<p onclick="showHLs()" class="btn">HIGHLIGHT</p>';
+    bShowRandom = true;
 }
 
 function showHLs() {
@@ -180,4 +193,6 @@ function showHLs() {
     window.scrollTo(0,0);
     let resultEnd = document.getElementById('resultEnd');
     resultEnd.innerHTML = '';
+    resultEnd.innerHTML = '<p onclick="showRandom()" class="btn">RANDOM</p>';
+    bShowRandom = false;
 }
