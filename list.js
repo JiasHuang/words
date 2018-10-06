@@ -16,7 +16,7 @@ function finalize(element) {
     let type = element.dataset.type;
     let desc = element.innerHTML;
     let text = '';
-    text += '<p class="btnR" onclick=onToggleHighlight.call(this)>[+]</p>\n';
+    text += '<p class="btnR" onclick=onToggleHighlight.call(this)>highlight</p>\n';
     text += '<p>' + word + ' [' + type + ']</p>\n';
     text += '<p>' + desc + '</p>\n';
     element.innerHTML = text;
