@@ -88,7 +88,7 @@ function onOpenTab(site) {
     } else if (site == 'dreye') {
         window.open('https://tw.dictionary.yahoo.com/dictionary?p='+word, 'dreye');
     } else if (site == 'database') {
-        window.open('db/'+word+'.html', 'database');
+        window.open('db.html?q='+word, 'database');
     }
 }
 

@@ -3,6 +3,25 @@ var yDown = null;
 var prevHL = null;
 var nextHL = null;
 
+function getURLVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+        vars[key] = value;
+    });
+    return vars;
+}
+
+function loadScript(url, callback) {
+    var script = document.createElement("script")
+    script.type = "text/javascript";
+    script.onload = function(){
+        callback();
+    };
+    script.src = url;
+    document.getElementsByTagName("head")[0].appendChild(script);
+}
+
+
 function handleTouchStart(event)
 {
     xDown = event.touches[0].clientX;
@@ -45,8 +64,8 @@ function updateAudio(q)
 {
     var text = '';
     text += '<h1>'+q+'</h1>\n';
-    text += '<audio preload="auto" id="uk"><source src="'+q+'.uk.ogg" type="audio/ogg"></audio>\n';
-    text += '<audio preload="auto" id="us"><source src="'+q+'.us.ogg" type="audio/ogg"></audio>\n';
+    text += '<audio preload="auto" id="uk"><source src="db/'+q+'.uk.ogg" type="audio/ogg"></audio>\n';
+    text += '<audio preload="auto" id="us"><source src="db/'+q+'.us.ogg" type="audio/ogg"></audio>\n';
     document.getElementById("audio").innerHTML = text;
 }
 
@@ -65,10 +84,12 @@ function loadHLs(q)
 
 function onDocumentReady()
 {
-    var url = window.location.pathname;
-    var q = url.substring(url.lastIndexOf('/')+1);
-    if (q.lastIndexOf(".") != -1)
-        q = q.substring(0, q.lastIndexOf("."));
+    var q = getURLVars()["q"];
+
+    loadScript('./db/'+q+'.js', function () {
+        document.getElementById('result').innerHTML = data;
+    });
+
     updateAudio(q);
     document.addEventListener('click', playAudio);
 
