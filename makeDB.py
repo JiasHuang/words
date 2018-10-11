@@ -24,11 +24,11 @@ def saveLocal(local, text, buffering=-1):
 def makeDataJS(inputs, options):
     for i in inputs:
         try:
-            filename = os.path.basename(i).split('.')[0]
+            q = os.path.basename(i).split('.')[0]
             m = re.search(r'(<div class="entry">.*?)<div class="definition-src">', readLocal(i), re.DOTALL | re.MULTILINE)
             txt = re.sub(r'<script.*?</script>', '', m.group(1), 0, re.DOTALL | re.MULTILINE)
             textJS = 'var data = `\n%s\n`;' %(txt)
-            local = '%s/%s.js' %(options.output, filename)
+            local = '%s/%s.js' %(options.output, q)
             saveLocal(local, textJS)
         except:
             print('Exception: ' + i)
@@ -49,11 +49,19 @@ def main():
         print('no output')
         return
 
+    if not os.path.isdir(options.output):
+        print('output not dir')
+        return
+
     inputs = []
     for i in options.input:
-        inputs.extend(glob.glob('%s/*.html' %(i)))
+        if os.path.isdir(i):
+            inputs.extend(glob.glob('%s/*.html' %(i)))
+        elif os.path.isfile(i):
+            inputs.append(i)
 
     makeDataJS(inputs, options)
+
     return
 
 if __name__ == '__main__':
