@@ -9,26 +9,13 @@ p {
     font-size: 24px;
 }
 
-.menubar {
-    position: fixed;
-    top: 0px;
-    right: 0px;
-    background-color: white;
-}
-
-.menubar span {
-    margin-right: 32px;
-    font-size: 32px;
-    color: blue;
-}
-
 .menubox {
     position: fixed;
     background: white;
 }
 
 .menubox p {
-    font-size: 32px;
+    font-size: 24px;
     line-height: 64px;
     color: blue;
     margin: 32px;
@@ -39,19 +26,8 @@ p {
 }
 
 .btn {
-    margin: 48px;
+    margin: 24px;
     color: blue;
     text-align: center;
-}
-
-.btnR {
-    position: absolute;
-    right: 0px;
-    min-width: 200px;
-    height: 100px;
-    text-align: center;
-    border: 2px solid white;
-    font-size: 32px;
-    opacity: 0.5;
 }
 

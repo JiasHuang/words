@@ -4,7 +4,6 @@ var bMenubox = false;
 var xDown = null;
 var yDown = null;
 var bHLs = false;
-var bStopOnClick = false;
 var bShowRandom = false;
 
 function saveLocalStorage() {
@@ -16,7 +15,6 @@ function finalize(element) {
     let type = element.dataset.type;
     let desc = element.innerHTML;
     let text = '';
-    text += '<p class="btnR" onclick=onToggleHighlight.call(this)>highlight</p>\n';
     text += '<p>' + word + ' [' + type + ']</p>\n';
     text += '<p>' + desc + '</p>\n';
     element.innerHTML = text;
@@ -48,13 +46,11 @@ function toggleHighlight(word) {
     }
     else if (index >= 0) {
         element.getElementsByTagName('p')[0].classList.remove('highlight');
-        element.getElementsByTagName('p')[1].classList.remove('highlight');
         highlights.splice(index, 1);
     }
     else {
         highlights.push(word);
         element.getElementsByTagName('p')[0].classList.add('highlight');
-        element.getElementsByTagName('p')[1].classList.add('highlight');
     }
 }
 
@@ -69,11 +65,12 @@ function toggleHLs() {
 }
 
 function onToggleHighlight() {
-    let element = event.target.parentElement;
-    let word = element.dataset.word;
-    toggleHighlight(word);
-    saveLocalStorage();
-    bStopOnClick = true;
+    let element = document.getElementById('menubox');
+    let word = element.dataset.selected;
+    if (word && word.length > 0) {
+        toggleHighlight(word);
+        saveLocalStorage();
+    }
 }
 
 function onOpenTab(site) {
@@ -93,12 +90,6 @@ function onOpenTab(site) {
 }
 
 function onClick(event) {
-
-    if (bStopOnClick) {
-        bStopOnClick = false;
-        return;
-    }
-
     if (event.target.matches('div[data-word] p')) {
         let element = event.target.parentElement;
         let word = element.dataset.word;
@@ -174,7 +165,7 @@ function showAll() {
 function showRandom() {
     hideAll();
     let elements = document.querySelectorAll('[data-word]');
-    for (let i=0;  i<8; i++)
+    for (let i=0; i<5; i++)
         elements[getRndInteger(0, elements.length)].style.display = 'block';
 
     window.scrollTo(0,0);
