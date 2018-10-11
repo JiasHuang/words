@@ -37,9 +37,9 @@ function handleTouchMove(event)
         let yDiff = yDown - yUp;
         if (Math.abs(xDiff) > 10 && Math.abs(yDiff) < 10) {
             if (xDiff > 0) {
-                window.location.href = nextHL+'.html';
+                window.location.href = 'db.html?q='+nextHL;
             } else {
-                window.location.href = prevHL+'.html';
+                window.location.href = 'db.html?q='+prevHL;
             }
         }
         xDown = null;
